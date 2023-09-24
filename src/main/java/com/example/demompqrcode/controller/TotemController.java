@@ -32,7 +32,7 @@ public class TotemController {
 
     @GetMapping("/{externalReference}")
     public ResponseEntity<OrderDetailsDto> findOrderPayment(@PathVariable String externalReference) {
-        return ResponseEntity.ok(totemService.getOrderPayment(externalReference).getElements().get(0));
+        return ResponseEntity.ok(totemService.getOrderPayment(externalReference));
     }
 
     @PostMapping(value = "/qr-code", produces = MediaType.IMAGE_PNG_VALUE)

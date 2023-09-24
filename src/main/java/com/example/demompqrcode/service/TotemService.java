@@ -2,7 +2,7 @@ package com.example.demompqrcode.service;
 
 import com.example.demompqrcode.client.GoogleFeign;
 import com.example.demompqrcode.client.MercadoPagoFeign;
-import com.example.demompqrcode.dto.in.ElementDto;
+import com.example.demompqrcode.dto.in.OrderDetailsDto;
 import com.example.demompqrcode.dto.in.OrderStoreDto;
 import com.example.demompqrcode.dto.out.ItemDto;
 import com.example.demompqrcode.dto.out.OrderDto;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -46,8 +47,8 @@ public class TotemService {
         return mercadoPagoFeign.create(TOKEN, USER_ID, POS_ID, orderDto).getBody();
     }
 
-    public ElementDto getOrderPayment(String externalReference) {
-        return mercadoPagoFeign.getOrderDetails(TOKEN, externalReference).getBody();
+    public OrderDetailsDto getOrderPayment(String externalReference) {
+        return Objects.requireNonNull(mercadoPagoFeign.getOrderDetails(TOKEN, externalReference).getBody()).getElements().get(0);
     }
 
     private void updateOrderTotalAmount(OrderDto orderDto) {
