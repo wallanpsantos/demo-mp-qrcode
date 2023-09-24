@@ -7,6 +7,7 @@ import com.example.demompqrcode.dto.in.OrderStoreDto;
 import com.example.demompqrcode.dto.out.ItemDto;
 import com.example.demompqrcode.dto.out.OrderDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
+@Log4j2
 @RequiredArgsConstructor
 public class TotemService {
 
@@ -24,14 +26,13 @@ public class TotemService {
     private static final String URL_NOTIFICATION = "https://eoywrutussrdfbi.m.pipedream.net/";
     private static final ZonedDateTime DURATION_QR_CODE = ZonedDateTime.now().plusHours(1);
 
-
     private final MercadoPagoFeign mercadoPagoFeign;
     private final GoogleFeign googleFeign;
 
     public OrderStoreDto createOrder(OrderDto orderDto) {
         String externalReference = UUID.randomUUID().toString();
 
-        System.out.println("ExternalReference to create order: " + externalReference);
+        log.info("EXTERNAL REFERENCE TO CREATE ORDER: " + externalReference);
 
         orderDto.setExternalReference(externalReference);
 
@@ -47,6 +48,7 @@ public class TotemService {
     }
 
     public OrderDetailsDto getOrderPayment(String externalReference) {
+        log.info("Search order with externalReference: " + externalReference);
         return Objects.requireNonNull(mercadoPagoFeign.getOrderDetails(TOKEN, externalReference).getBody()).getElements().get(0);
     }
 
@@ -65,6 +67,8 @@ public class TotemService {
     }
 
     public byte[] getImageQRCode(String data) {
+        log.info("The data to be generated to image QR Code: " + data);
+
         // Tamanho da imagem em Pixel
         String imageWidthHeight = "500x500";
         // Especifica um código QR.
