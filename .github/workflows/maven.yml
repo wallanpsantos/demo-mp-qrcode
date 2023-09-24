@@ -20,28 +20,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+    
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+        
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-  secret-generator:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: some/secret-store@v1
-      with:
-        credentials: ${{ secrets.SECRET_STORE_CREDENTIALS }}
-        instance: ${{ secrets.SECRET_STORE_INSTANCE }}
-    - name: generate secret
-      shell: bash
-      run: |
-        GENERATED_SECRET=$((RANDOM))
-        echo "::add-mask::$GENERATED_SECRET"
-        SECRET_HANDLE=$(secret-store store-secret "$GENERATED_SECRET")
-        echo "handle=$secret_handle" >> "$GITHUB_OUTPUT"
+    - name: Verify update snapshots
+      run: mvn --batch-mode --update-snapshots verify
 
+    - name: Build jar to target
+      run: mkdir staging && cp target/*.jar staging
+      
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Package
+        path: staging
