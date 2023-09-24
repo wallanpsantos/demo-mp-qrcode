@@ -6,7 +6,6 @@ import com.example.demompqrcode.dto.in.OrderDetailsDto;
 import com.example.demompqrcode.dto.in.OrderStoreDto;
 import com.example.demompqrcode.dto.out.ItemDto;
 import com.example.demompqrcode.dto.out.OrderDto;
-import com.example.demompqrcode.dto.out.QrCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -65,13 +64,13 @@ public class TotemService {
         }
     }
 
-    public byte[] getImageQRCode(QrCode qrCode) {
+    public byte[] getImageQRCode(String qrCode) {
         // Tamanho da imagem em Pixel
         String imageWidthHeight = "500x500";
         // Especifica um código QR.
         String imageType = "qr";
         // Os dados a serem codificados.
-        String data = qrCode.getData();
+        String data = qrCode;
         // Recuperação de até 30% dos dados perdidos.
         String recovery = "H";
 

@@ -28,7 +28,7 @@ public class OrderDetailsDto {
     private String externalReference;
     private List<OrderPaymentDto> payments;
 
-    @JsonProperty("collector")
+//    @JsonProperty("collector")
     private MerchantDto merchant;
 
     private String notificationUrl;

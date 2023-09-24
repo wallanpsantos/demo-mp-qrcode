@@ -14,8 +14,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"var jsonData = pm.response.json();\r",
-							"pm.globals.set(\"qr_data_test\", jsonData.qr_data);\r",
+							"// var jsonData = pm.response.json();\r",
+							"// pm.globals.set(\"qr_data_test\", jsonData.qr_data);\r",
 							""
 						],
 						"type": "text/javascript"
@@ -24,10 +24,16 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "withImageQrCode",
+						"value": "true",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"items\": [\r\n        {\r\n            \"category\": \"Lanche\",\r\n            \"title\": \"Big Mac\",\r\n            \"description\": \"Lanche + RefrigeraRefrigerante\",\r\n            \"quantity\": 4,\r\n            \"unit_price\": 31.90\r\n        }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"items\": [\r\n        {\r\n            \"category\": \"Lanche\",\r\n            \"title\": \"Big Mac\",\r\n            \"description\": \"Lanche + RefrigeraRefrigerante\",\r\n            \"quantity\": 4,\r\n            \"unit_price\": 31.90\r\n        },\r\n        {\r\n            \"category\": \"Bebida\",\r\n            \"title\": \"Coca-Cola\",\r\n            \"description\": \"Refrigerante\",\r\n            \"quantity\": 1,\r\n            \"unit_price\": 4.90\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -67,7 +73,7 @@
 					"variable": [
 						{
 							"key": "externalReference",
-							"value": "a1169a94-61d6-41b6-bdab-23cff691f9e3"
+							"value": "249990da-4448-48aa-b409-518a437c9952"
 						}
 					]
 				}
@@ -81,7 +87,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"data\": \"00020101021243650016COM.MERCADOLIBRE020130636f579f013-fc39-430c-ad61-6040bcf6661a5204000053039865802BR5909Test Test6009SAO PAULO62070503***63044B02\"\r\n}",
+					"raw": "{\r\n    \"data\": \"00020101021243650016COM.MERCADOLIBRE020130636d82304b8-089f-42d3-9d6d-c2ed572348385204000053039865802BR5909Test Test6009SAO PAULO62070503***6304C75B\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
