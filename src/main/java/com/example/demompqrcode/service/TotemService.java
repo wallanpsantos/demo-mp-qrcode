@@ -6,11 +6,9 @@ import com.example.demompqrcode.dto.in.OrderDetailsDto;
 import com.example.demompqrcode.dto.in.OrderStoreDto;
 import com.example.demompqrcode.dto.out.ItemDto;
 import com.example.demompqrcode.dto.out.OrderDto;
-import com.example.demompqrcode.utils.QrCodeUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -66,22 +64,15 @@ public class TotemService {
         }
     }
 
-    public byte[] getImageQRCode(String qrCode) throws IOException {
+    public byte[] getImageQRCode(String data) {
         // Tamanho da imagem em Pixel
         String imageWidthHeight = "500x500";
         // Especifica um código QR.
         String imageType = "qr";
-        // Os dados a serem codificados.
-        String data = qrCode;
         // Recuperação de até 30% dos dados perdidos.
         String recovery = "H";
 
-        try {
-            return googleFeign.getImageQrCode(imageWidthHeight, imageType, data, recovery);
-        } catch (Exception e) {
-            System.out.println("Error when requesting QR Code image generation API on Google. error: " + e.getMessage());
-            return QrCodeUtils.generatedImageQrCode(qrCode);
-        }
+        return googleFeign.getImageQrCode(imageWidthHeight, imageType, data, recovery);
 
     }
 }
