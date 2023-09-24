@@ -1,0 +1,107 @@
+{
+	"info": {
+		"_postman_id": "0f9936a3-4dd6-4846-9cd8-a7b3fa76499e",
+		"name": "Prova de Conceito - QR Code",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7142154",
+		"_collection_link": "https://universal-escape-423074.postman.co/workspace/Tech-FIAP~d4d455ca-b6d7-465e-b694-d16b56713f80/collection/7142154-0f9936a3-4dd6-4846-9cd8-a7b3fa76499e?action=share&source=collection_link&creator=7142154"
+	},
+	"item": [
+		{
+			"name": "Criando Ordem (Pedido)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.globals.set(\"qr_data_test\", jsonData.qr_data);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"items\": [\r\n        {\r\n            \"category\": \"Lanche\",\r\n            \"title\": \"Big Mac\",\r\n            \"description\": \"Lanche + RefrigeraRefrigerante\",\r\n            \"quantity\": 4,\r\n            \"unit_price\": 31.90\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/totem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"totem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Ordem Pagamento",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/totem/:externalReference",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"totem",
+						":externalReference"
+					],
+					"variable": [
+						{
+							"key": "externalReference",
+							"value": "a1169a94-61d6-41b6-bdab-23cff691f9e3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exibir QR Code",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": \"00020101021243650016COM.MERCADOLIBRE020130636f579f013-fc39-430c-ad61-6040bcf6661a5204000053039865802BR5909Test Test6009SAO PAULO62070503***63044B02\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/totem/qr-code",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"totem",
+						"qr-code"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
